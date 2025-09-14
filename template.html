@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - {{ nick }}</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #663399;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .post {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 16px;
+            padding: 16px;
+            max-width: 600px;
+            width: 100%;
+            color: #333333;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #663399;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            object-fit: cover;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .name {
+            font-weight: bold;
+            margin-right: 4px;
+            font-size: 15px;
+            color: #333333;
+        }
+
+        .username {
+            color: #666666;
+            margin-right: 4px;
+            font-size: 15px;
+        }
+
+        .time {
+            color: #666666;
+            font-size: 15px;
+        }
+
+        .post-content {
+            font-size: 15px;
+            line-height: 1.4;
+            color: #333333;
+        }
+
+        .reply-indicator {
+            color: #666666;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .tags {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #663399;
+        }
+
+        .post-meta {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #666666;
+            display: flex;
+            gap: 10px;
+        }
+
+        .mood-only {
+            font-size: 24px;
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="post">
+        <div class="post-header">
+            {% if has_avatar %}
+                <img src="{{ avatar_url }}" alt="{{ nick }}" class="avatar">
+            {% else %}
+                <div class="avatar">{{ user_initial }}</div>
+            {% endif %}
+            
+            <div class="user-info">
+                <span class="name">{{ title }}</span>
+                <span class="username">@{{ nick }}</span>
+                <span class="time">· {{ formatted_time }}</span>
+            </div>
+        </div>
+        
+        <div class="post-content">
+            {% if is_reply %}
+                <div class="reply-indicator">Replying to a post</div>
+            {% endif %}
+            
+            {% if has_content or has_mood %}
+                {% if has_content and has_mood %}
+                    {{ formatted_content | safe }}
+                {% elif has_mood and not has_content %}
+                    <div class="mood-only">{{ mood }}</div>
+                {% else %}
+                    {{ formatted_content | safe }}
+                {% endif %}
+            {% else %}
+                <span style="color: #666666; font-style: italic;">No content</span>
+            {% endif %}
+        </div>
+
+        {% if has_tags %}
+            <div class="tags">#{{ tags_string.replace(' ', ' #') }}</div>
+        {% endif %}
+
+        {% if client or post_id %}
+            <div class="post-meta">
+                {% if client %}
+                    <span>📱 {{ client }}</span>
+                {% endif %}
+                {% if post_id %}
+                    <span>🔗 {{ post_id }}</span>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

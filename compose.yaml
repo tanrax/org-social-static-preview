@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  org-social-preview:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./social.org:/app/social.org:ro
+      - ./template.html:/app/template.html:ro
+      - ./preview:/app/preview
+    environment:
+      - SOCIAL_FILE=/app/social.org
+      - PREVIEW_DIR=/app/preview
+      - TEMPLATE_DIR=/app
+      - TEMPLATE_NAME=template.html
+    command: >
+      python org_social_preview_generator.py 
+      --social-file ${SOCIAL_FILE:-/app/social.org}
+      --preview-dir ${PREVIEW_DIR:-/app/preview}
+      --template-dir ${TEMPLATE_DIR:-/app}
+      --template-name ${TEMPLATE_NAME:-template.html}
