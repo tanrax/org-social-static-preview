@@ -9,6 +9,7 @@ COPY social.org .
 COPY org_social_preview_generator.py .
 COPY template.html .
 
-RUN mkdir -p /app/preview
+# Create preview directory with correct permissions
+RUN mkdir -p /app/preview && chmod 777 /app/preview
 
 CMD ["python", "org_social_preview_generator.py", "--social-file", "/app/social.org", "--preview-dir", "/app/preview", "--template-dir", "/app", "--template-name", "template.html"]
