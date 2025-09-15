@@ -239,18 +239,9 @@ class PreviewGenerator:
         """Format timestamp for display"""
         try:
             dt = datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
-            now = datetime.now(dt.tzinfo)
-
-            diff = now - dt
-
-            if diff.days > 0:
-                return f"{diff.days}d"
-            elif diff.seconds > 3600:
-                return f"{diff.seconds // 3600}h"
-            else:
-                return f"{max(1, diff.seconds // 60)}min"
+            return dt.strftime("%Y-%m-%d")
         except Exception:
-            return "1h"
+            return "2024-01-01"
 
 
 class OrgSocialPreviewGenerator:

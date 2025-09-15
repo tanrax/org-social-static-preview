@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }} - {{ nick }}</title>
         <!-- Open Graph Protocol -->
-        <meta property="og:title" content="{{ title }} - {{ nick }}">
+        <meta property="og:title" content="{{ nick }}">
         <meta property="og:description" content="{{ content | og_description }}">
         <meta property="og:type" content="article">
         <meta property="og:url" content="{{ post_url }}">
@@ -70,6 +70,7 @@
             color: #666666;
             margin-right: 4px;
             font-size: 15px;
+            font-weight: bold;
         }
 
         .time {
@@ -120,9 +121,7 @@
             {% endif %}
             
             <div class="user-info">
-                <span class="name">{{ title }}</span>
-                <span class="username">@{{ nick }}</span>
-                <span class="time">· {{ formatted_time }}</span>
+                <span class="username">{{ nick }}</span>
             </div>
         </div>
         
@@ -158,6 +157,10 @@
                 {% endif %}
             </div>
         {% endif %}
+
+        <div style="margin-top: 12px; padding-top: 8px; border-top: 1px solid #eee;">
+            <a href="https://github.com/tanrax/org-social" target="_blank" style="color: #663399; text-decoration: none; font-size: 12px;">Want to know more about Org Social?</a>
+        </div>
     </div>
 </body>
 </html>
