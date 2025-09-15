@@ -4,7 +4,7 @@ Tool for generating HTML previews from [Org Social](https://github.com/tanrax/or
 
 ![Screenshot](screenshot.png)
 
-[Link](https://andros.dev/static/preview/2025-09-12T09-35-53plus0200.html)
+[Link](https://andros.dev/static/preview/2025-09-14T09-22-09plus0200.html)
 
 ## Installation
 
@@ -21,15 +21,24 @@ pip install jinja2
 Using Docker Compose (recommended):
 
 ```bash
-docker compose up
+# Create preview directory first
+mkdir -p preview
+
+# Run with Docker Compose
+UID=$(id -u) GID=$(id -g) docker compose up
 ```
 
 Or build and run manually:
 
 ```bash
+# Create preview directory first
+mkdir -p preview
+
 docker build -t org-social-preview .
 docker run -v $(pwd)/social.org:/app/social.org:ro -v $(pwd)/preview:/app/preview org-social-preview
 ```
+
+**Note**: Make sure to create the `preview` directory before running Docker to avoid permission issues.
 
 ### Arguments
 
