@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    user: "${UID:-1000}:${GID:-1000}"
     volumes:
       - ./social.org:/app/social.org:ro
       - ./template.html:/app/template.html:ro
