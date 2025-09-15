@@ -229,9 +229,7 @@ class PreviewGenerator:
         # Convert line breaks
         formatted = formatted.replace("\n", "<br>")
 
-        # Add mood emoji if present and there's content
-        if mood and content.strip():
-            formatted = f'{formatted} <span style="font-size: 16px;">{mood}</span>'
+        # Mood is now displayed in the header, not in content
 
         return formatted or "No content"
 

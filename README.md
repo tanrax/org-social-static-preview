@@ -2,6 +2,10 @@
 
 Tool for generating HTML previews from [Org Social](https://github.com/tanrax/org-social) files. This tool creates social media-like preview cards for each post in your `social.org` file.
 
+![Screenshot](screenshot.png)
+
+[Link](https://andros.dev/static/preview/2025-09-12T09-35-53plus0200.html)
+
 ## Installation
 
 No external dependencies required beyond Python 3 standard library and Jinja2:

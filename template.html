@@ -122,6 +122,9 @@
             
             <div class="user-info">
                 <span class="username">{{ nick }}</span>
+                {% if has_mood %}
+                    <span style="margin-left: 8px;">{{ mood }}</span>
+                {% endif %}
             </div>
         </div>
         
