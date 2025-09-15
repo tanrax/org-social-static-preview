@@ -11,4 +11,4 @@ COPY template.html .
 
 RUN mkdir -p /app/preview
 
-CMD ["python", "org_social_preview_generator.py"]
+CMD ["python", "org_social_preview_generator.py", "--social-file", "/app/social.org", "--preview-dir", "/app/preview", "--template-dir", "/app", "--template-name", "template.html"]
