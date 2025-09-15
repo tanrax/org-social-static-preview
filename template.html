@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }} - {{ nick }}</title>
+        <!-- Open Graph Protocol -->
+        <meta property="og:title" content="{{ title }} - {{ nick }}">
+        <meta property="og:description" content="{{ content | og_description }}">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="{{ post_url }}">
+        <meta property="og:image" content="{{ avatar_url }}">
+        <meta property="og:site_name" content="Org Social Previews">
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;

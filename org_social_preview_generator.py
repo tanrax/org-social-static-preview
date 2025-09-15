@@ -124,14 +124,29 @@ class OrgSocialParser:
 class PreviewGenerator:
 	def __init__(self, template_dir=".", template_name="template.html"):
 		self.env = Environment(loader=FileSystemLoader(template_dir))
+		def og_description(value, max_length=120):
+			import re
+			# Replace newlines with spaces
+			text = value.replace('\r\n', ' ').replace('\n', ' ').replace('\r', ' ')
+			# Collapse all whitespace to single spaces
+			text = re.sub(r'\s+', ' ', text)
+			# HTML tag filter
+			text = re.sub(r'<[^>]+>', '', text)
+			# Collapse multiple spaces
+			text = re.sub(r' +', ' ', text)
+			if len(text) > max_length:
+				text = text[:max_length].rstrip() + '...'
+			return text.strip()
+		self.env.filters['og_description'] = og_description
 		self.template = self.env.get_template(template_name)
 
 	def generate_preview(self, post, metadata):
 		"""Generate HTML preview for a single post"""
-		context = self._prepare_context(post, metadata)
+		feed_url = metadata.get('FEED_URL', '')
+		context = self._prepare_context(post, metadata, feed_url)
 		return self.template.render(**context)
 
-	def _prepare_context(self, post, metadata):
+	def _prepare_context(self, post, metadata, feed_url):
 		"""Prepare context data for template rendering"""
 		post_id = post.get('ID', '')
 		content = post.get('content', '')
@@ -150,6 +165,8 @@ class PreviewGenerator:
 
 		formatted_time = self._format_timestamp(post_id)
 		tags_list = tags.split() if tags else []
+
+		post_url = f"{feed_url}#{post_id}" if feed_url and post_id else ''
 
 		return {
 			'post_id': post_id,
@@ -173,6 +190,7 @@ class PreviewGenerator:
 			'user_initial': nick[0].upper() if nick else 'U',
 			'formatted_time': formatted_time,
 			'timestamp': post_id,
+			'post_url': post_url,
 		}
 
 	def _format_content(self, content, mood, reply_to):
