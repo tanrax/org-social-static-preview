@@ -24,6 +24,9 @@ Using Docker Compose (recommended):
 # Create preview directory first
 mkdir -p preview
 
+# Copy `social.org` file to the current directory
+cp /path/to/your/social.org .
+
 # Run with Docker Compose
 UID=$(id -u) GID=$(id -g) docker compose up
 ```
@@ -92,6 +95,10 @@ Available template variables:
 - `formatted_time`: Formatted timestamp
 - `avatar_url`: User avatar URL
 - `post_url`: Post permalink
+
+## Technical recommendation
+
+If you are going to use a cron job to generate them repeatedly, check the header or metadata for when the last modification was made.
 
 ## License
 
