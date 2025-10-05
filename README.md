@@ -1,4 +1,4 @@
-# Org Social Preview Generator
+# Org Social Static Preview Generator
 
 Tool for generating HTML previews from [Org Social](https://github.com/tanrax/org-social) files. This tool creates social media-like preview cards for each post in your `social.org` file.
 
