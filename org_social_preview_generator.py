@@ -205,6 +205,33 @@ class PreviewGenerator:
 
         formatted = content
 
+        # Handle source code blocks first (before other replacements)
+        code_blocks = []
+        code_block_pattern = r"#\+BEGIN_SRC\s+([\w-]+)?\s*\n(.*?)#\+END_SRC"
+
+        def replace_code_block(match):
+            lang = match.group(1) or "text"
+            code = match.group(2)
+            # Remove trailing newline before END_SRC if present
+            code = code.rstrip("\n")
+            # HTML escape the code content
+            code_escaped = (
+                code.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+            )
+            placeholder = f"___CODE_BLOCK_{len(code_blocks)}___"
+            code_blocks.append(
+                {"lang": lang, "code": code_escaped, "placeholder": placeholder}
+            )
+            return placeholder
+
+        # Replace code blocks with placeholders
+        formatted = re.sub(
+            code_block_pattern,
+            replace_code_block,
+            formatted,
+            flags=re.DOTALL | re.IGNORECASE,
+        )
+
         # Handle org-social mentions
         formatted = re.sub(
             r"\[\[org-social:([^\]]+)\]\[([^\]]+)\]\]",
@@ -228,6 +255,11 @@ class PreviewGenerator:
 
         # Convert line breaks
         formatted = formatted.replace("\n", "<br>")
+
+        # Restore code blocks with proper HTML formatting
+        for block in code_blocks:
+            code_html = f'<pre style="background-color: #f6f8fa; padding: 16px; border-radius: 6px; overflow-x: auto; margin: 10px 0;"><code class="language-{block["lang"]}">{block["code"]}</code></pre>'
+            formatted = formatted.replace(block["placeholder"], code_html)
 
         # Mood is now displayed in the header, not in content
 
