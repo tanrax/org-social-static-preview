@@ -100,6 +100,10 @@ Available template variables:
 
 If you are going to use a cron job to generate them repeatedly, check the header or metadata for when the last modification was made.
 
+## Contributing
+
+Contributions are welcome! Please see the [contribution guidelines](https://git.andros.dev/andros/contribute) for instructions on how to submit issues or pull requests.
+
 ## License
 
 This project is open source. See the main [Org Social repository](https://github.com/tanrax/org-social) for more information.
